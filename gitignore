@@ -1,2 +1,5 @@
 venv/
 .env
+heart.png
+__pycache__/
+recipients.csv

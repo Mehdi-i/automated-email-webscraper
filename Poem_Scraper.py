@@ -7,23 +7,22 @@ from dotenv import load_dotenv
 import os
 
 WebURL = "https://www.lovepoemsandquotes.com/LovePoem01.html"
+load_dotenv(r"PoemDelivery\.env")
 
 def connect_Database():
-    load_dotenv()
     database = mysql.connector.connect(
         host = os.getenv("host"),
         user = os.getenv("user"),
         password = os.getenv("password"),
         database = os.getenv("database")
     )
-    print("Connected to the Database")
 
     cursor = database.cursor()
     sqlcommand = "SHOW TABLES LIKE 'poems'"
     cursor.execute(sqlcommand)
     result = cursor.fetchone()
     if result:
-        print("poem table exists")
+        return database, cursor
     else:
         sqlcommand = """Create table poems (
 	                    Poem_id int AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +34,7 @@ def connect_Database():
                     )"""
         cursor.execute(sqlcommand)
 
-    return database, cursor
+        return database, cursor
 
 
 def webscrape(link):
@@ -107,4 +106,6 @@ def SQLRecorder():
                 continue
     database.close()
 
-SQLRecorder()
+
+if __name__ == "__main__":
+    SQLRecorder()
