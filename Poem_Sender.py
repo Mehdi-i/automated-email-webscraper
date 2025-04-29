@@ -68,7 +68,7 @@ def Automated_email():
                 connection.send_message(message)
                 print(f"email sent to {information['name']}")
             
-                return data[0]
+            return data[0]
         except Exception as e:
             attempts += 1
             print(f"error {e} occured, retrying!")
